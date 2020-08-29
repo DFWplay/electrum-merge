@@ -39,8 +39,8 @@ def read_json(filename, default):
     return r
 
 
-GIT_REPO_URL = "https://github.com/spesmilo/electrum"
-GIT_REPO_ISSUES_URL = "https://github.com/spesmilo/electrum/issues"
+GIT_REPO_URL = "https://github.com/projectmerge/electrum-merge"
+GIT_REPO_ISSUES_URL = "https://github.com/projectmerge/electrum-merge/issues"
 
 
 class AbstractNet:
@@ -53,11 +53,11 @@ class AbstractNet:
 class BitcoinMainnet(AbstractNet):
 
     TESTNET = False
-    WIF_PREFIX = 0x80
-    ADDRTYPE_P2PKH = 0
-    ADDRTYPE_P2SH = 5
-    SEGWIT_HRP = "bc"
-    GENESIS = "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
+    WIF_PREFIX = 0x82
+    ADDRTYPE_P2PKH = 50
+    ADDRTYPE_P2SH = 53
+    SEGWIT_HRP = "merge"
+    GENESIS = "44e480f99bf49a0826fef151fd56e5619f54aada3c2a4e582711276fffd13683"
     DEFAULT_PORTS = {'t': '50001', 's': '50002'}
     DEFAULT_SERVERS = read_json('servers.json', {})
     CHECKPOINTS = read_json('checkpoints.json', [])

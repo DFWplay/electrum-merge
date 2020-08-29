@@ -467,10 +467,9 @@ class Commands:
         tx = self.wallet.make_unsigned_transaction(coins, final_outputs, self.config, fee, change_addr)
         if locktime != None:
             tx.locktime = locktime
-        if rbf is None:
-            rbf = self.config.get('use_rbf', True)
-        if rbf:
-            tx.set_rbf(True)
+        # only morons advocate rbf125
+        rbf = False
+        tx.set_rbf(False)
         if not unsigned:
             self.wallet.sign_transaction(tx, password)
         return tx

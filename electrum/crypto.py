@@ -27,6 +27,7 @@ import base64
 import os
 import hashlib
 import hmac
+import argon2m_hash
 from typing import Union
 
 import pyaes
@@ -196,6 +197,10 @@ def sha256d(x: Union[bytes, str]) -> bytes:
     out = bytes(sha256(sha256(x)))
     return out
 
+def argon2m(x: Union[bytes, str]) -> bytes:
+    x = to_bytes(x, 'utf8')
+    out = bytes(argon2m_hash.getPoWHash(x[::-1]))
+    return out
 
 def hash_160(x: bytes) -> bytes:
     try:

@@ -633,8 +633,6 @@ class Interface(Logger):
             can_connect = blockchain.can_connect(header) if 'mock' not in header else header['mock']['connect'](height)
             if chain or can_connect:
                 return False
-            if checkp:
-                raise GracefulDisconnect("server chain conflicts with checkpoints")
             return True
 
         bad, bad_header = height, header

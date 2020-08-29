@@ -1665,9 +1665,8 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, Logger):
         amount = tx.output_value() if self.max_button.isChecked() else sum(map(lambda x:x[2], outputs))
         fee = tx.get_fee()
 
-        use_rbf = self.config.get('use_rbf', True)
-        if use_rbf:
-            tx.set_rbf(True)
+        use_rbf = False
+        tx.set_rbf(False)
 
         if fee < self.wallet.relayfee() * tx.estimated_size() / 1000:
             self.show_error('\n'.join([
@@ -2883,30 +2882,6 @@ class ElectrumWindow(QMainWindow, MessageBoxMixin, Logger):
             self.fee_adv_controls.setVisible(bool(x))
         feebox_cb.stateChanged.connect(on_feebox)
         fee_widgets.append((feebox_cb, None))
-
-        use_rbf = self.config.get('use_rbf', True)
-        use_rbf_cb = QCheckBox(_('Use Replace-By-Fee'))
-        use_rbf_cb.setChecked(use_rbf)
-        use_rbf_cb.setToolTip(
-            _('If you check this box, your transactions will be marked as non-final,') + '\n' + \
-            _('and you will have the possibility, while they are unconfirmed, to replace them with transactions that pay higher fees.') + '\n' + \
-            _('Note that some merchants do not accept non-final transactions until they are confirmed.'))
-        def on_use_rbf(x):
-            self.config.set_key('use_rbf', bool(x))
-            batch_rbf_cb.setEnabled(bool(x))
-        use_rbf_cb.stateChanged.connect(on_use_rbf)
-        fee_widgets.append((use_rbf_cb, None))
-
-        batch_rbf_cb = QCheckBox(_('Batch RBF transactions'))
-        batch_rbf_cb.setChecked(self.config.get('batch_rbf', False))
-        batch_rbf_cb.setEnabled(use_rbf)
-        batch_rbf_cb.setToolTip(
-            _('If you check this box, your unconfirmed transactions will be consolidated into a single transaction.') + '\n' + \
-            _('This will save fees.'))
-        def on_batch_rbf(x):
-            self.config.set_key('batch_rbf', bool(x))
-        batch_rbf_cb.stateChanged.connect(on_batch_rbf)
-        fee_widgets.append((batch_rbf_cb, None))
 
         msg = _('OpenAlias record, used to receive coins and to sign payment requests.') + '\n\n'\
               + _('The following alias providers are available:') + '\n'\
