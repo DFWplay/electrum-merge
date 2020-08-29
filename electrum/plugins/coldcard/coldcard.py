@@ -61,7 +61,7 @@ except ImportError:
 CKCC_SIMULATED_PID = CKCC_PID ^ 0x55aa
 
 def my_var_int(l):
-    # Bitcoin serialization of integers... directly into binary!
+    # Merge serialization of integers... directly into binary!
     if l < 253:
         return pack("B", l)
     elif l < 0x10000:
@@ -360,7 +360,7 @@ class Coldcard_KeyStore(Hardware_KeyStore):
             assert len(resp) == 2
             addr, raw_sig = resp
 
-            # already encoded in Bitcoin fashion, binary.
+            # already encoded in Merge fashion, binary.
             assert 40 < len(raw_sig) <= 65
 
             return raw_sig
